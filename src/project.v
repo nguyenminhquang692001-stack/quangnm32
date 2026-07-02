@@ -1,26 +1,43 @@
-{
-  "//": "Default Tiny Tapeout SKY configuration. Keep unchanged unless necessary.",
-  "PL_TARGET_DENSITY_PCT": 60,
-  "CLOCK_PERIOD": 20,
-  "PL_RESIZER_HOLD_SLACK_MARGIN": 0.1,
-  "GRT_RESIZER_HOLD_SLACK_MARGIN": 0.05,
-  "RUN_LINTER": 1,
-  "LINTER_INCLUDE_PDK_MODELS": 1,
-  "CLOCK_PORT": "clk",
-  "RUN_KLAYOUT_XOR": 0,
-  "RUN_KLAYOUT_DRC": 0,
-  "DESIGN_REPAIR_BUFFER_OUTPUT_PORTS": 0,
-  "TOP_MARGIN_MULT": 1,
-  "BOTTOM_MARGIN_MULT": 1,
-  "LEFT_MARGIN_MULT": 6,
-  "RIGHT_MARGIN_MULT": 6,
-  "FP_SIZING": "absolute",
-  "GRT_ALLOW_CONGESTION": 1,
-  "FP_IO_HLENGTH": 2,
-  "FP_IO_VLENGTH": 2,
-  "FP_PDN_VPITCH": 38.87,
-  "RUN_CTS": 1,
-  "FP_PDN_MULTILAYER": 0,
-  "MAGIC_DEF_LABELS": 0,
-  "MAGIC_WRITE_LEF_PINONLY": 1
-}
+/*
+ * Full Adder for Tiny Tapeout SKY
+ * Author: nguyenminhquang69
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+`default_nettype none
+
+module tt_um_nguyenminhquang69_sys_full_adder (
+    input  wire [7:0] ui_in,    // Dedicated inputs
+    output wire [7:0] uo_out,   // Dedicated outputs
+    input  wire [7:0] uio_in,   // Bidirectional input path
+    output wire [7:0] uio_out,  // Bidirectional output path
+    output wire [7:0] uio_oe,   // Bidirectional output enable
+    input  wire       ena,      // Design enable
+    input  wire       clk,      // Clock (unused)
+    input  wire       rst_n     // Active-low reset (unused)
+);
+
+    // Inputs
+    wire a   = ui_in[0];
+    wire b   = ui_in[1];
+    wire cin = ui_in[2];
+
+    // Full-adder equations
+    wire sum  = a ^ b ^ cin;
+    wire cout = (a & b) | (a & cin) | (b & cin);
+
+    // Output mapping:
+    // uo_out[0] = SUM
+    // uo_out[1] = COUT
+    assign uo_out = {6'b000000, cout, sum};
+
+    // Bidirectional pins are unused
+    assign uio_out = 8'b00000000;
+    assign uio_oe  = 8'b00000000;
+
+    // Mark unused inputs to avoid lint warnings
+    wire _unused = &{ena, clk, rst_n, uio_in, ui_in[7:3], 1'b0};
+
+endmodule
+
+`default_nettype wire
