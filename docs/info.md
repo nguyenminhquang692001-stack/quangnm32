@@ -1,20 +1,42 @@
-<!---
-
-This file is used to generate your project datasheet. Please fill in the information below and delete any unused
-sections.
-
-You can also include images in this folder and reference them in the markdown. Each image must be less than
-512 kb in size, and the combined size of all images must be less than 1 MB.
--->
+# 3-input Full Adder
 
 ## How it works
 
-Explain how your project works
+This design implements a one-bit full adder.
+
+Inputs:
+
+- `ui_in[0]`: A
+- `ui_in[1]`: B
+- `ui_in[2]`: Cin
+
+Outputs:
+
+- `uo_out[0]`: Sum
+- `uo_out[1]`: Cout
+
+The Boolean equations are:
+
+```text
+Sum  = A XOR B XOR Cin
+Cout = (A AND B) OR (A AND Cin) OR (B AND Cin)
+```
+
+## Truth table
+
+| A | B | Cin | Sum | Cout |
+|---|---|-----|-----|------|
+| 0 | 0 | 0   | 0   | 0    |
+| 0 | 0 | 1   | 1   | 0    |
+| 0 | 1 | 0   | 1   | 0    |
+| 0 | 1 | 1   | 0   | 1    |
+| 1 | 0 | 0   | 1   | 0    |
+| 1 | 0 | 1   | 0   | 1    |
+| 1 | 1 | 0   | 0   | 1    |
+| 1 | 1 | 1   | 1   | 1    |
 
 ## How to test
 
-Explain how to use your project
+Set A, B, and Cin on `ui_in[2:0]`, then read Sum and Cout from
+`uo_out[1:0]`. The design is combinational and does not require a clock.
 
-## External hardware
-
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
