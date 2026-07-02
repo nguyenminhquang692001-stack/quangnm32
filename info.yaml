@@ -1,12 +1,12 @@
 project:
   title: "3-input Full Adder"
-  author: "Nguyen Van Dong Dong"
+  author: "nguyenminhquang69"
   discord: ""
   description: "A basic combinational full adder with A, B, Cin, Sum, and Cout."
   language: "Verilog"
   clock_hz: 0
   tiles: "1x1"
-  top_module: "tt_um_nguyenvandongsn97_sys_full_adder"
+  top_module: "tt_um_nguyenminhquang69_sys_full_adder"
   source_files:
     - "project.v"
 
